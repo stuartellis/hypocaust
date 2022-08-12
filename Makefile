@@ -1,6 +1,18 @@
-# Project tasks
+# Makefile
+#
+# https://makefiletutorial.com
 
-.PHONY: clean
+# Variables
+
+TF_DIR := terraform
+TF_CMD := @terraform -chdir=$(TF_DIR)
+
+# Targets
+
+.PHONY: clean tf\:init
+
+tf\:init:
+	$(TF_CMD) init
 
 clean:
 	rm -fr tmp
