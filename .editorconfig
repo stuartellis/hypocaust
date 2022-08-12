@@ -1,4 +1,6 @@
-# EditorConfig: https://EditorConfig.org
+# Defaults for editor applications
+#
+# https://EditorConfig.org
 
 # Top-most EditorConfig file
 root = true
