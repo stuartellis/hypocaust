@@ -11,19 +11,24 @@ SHELL := bash
 MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 
+# Project variables
+
+ENVIRONMENT		?= dev
+TF_STACK		?= hello_lambda
+
 # Default target
 
 .DEFAULT_GOAL := test
 
 ## Project Targets
 
+.PHONY: clean
 clean:
 	git clean -fdx
-.PHONY: clean
 
+.PHONY: test
 test:
 	@echo "Not implemented" 
-.PHONY: test
 
 ## Other Targets
 
