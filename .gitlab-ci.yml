@@ -9,7 +9,8 @@ services:
 before_script:
   - apk add bash make
 
-build:
-  stage: build
+plan:
+  stage: plan
   script:
-    make tf:info
+    make tf:init
+    make tf:plan

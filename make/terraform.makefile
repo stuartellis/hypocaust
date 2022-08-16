@@ -6,14 +6,15 @@
 
 TF_VERSION			:= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
 
-TF_BACKENDS_DIR		:= ./backends
-TF_BACKEND_FILE		:= $(TF_BACKENDS_DIR)/$(ENVIRONMENT)/$(TF_STACK).backend
 TF_SRC_HOST_DIR		:= $(shell pwd)/terraform
-TF_STACKS_DIR		:= ./stacks
-TF_STACK_DIR		:= $(TF_STACKS_DIR)/$(TF_STACK)
+TF_BACKENDS_DIR		:= backends
+TF_BACKEND_FILE		:= $(SRC_BIND_DIR)/$(TF_BACKENDS_DIR)/$(ENVIRONMENT)/$(TF_STACK).backend
+TF_STACKS_DIR		:= stacks
+TF_STACK_DIR		:= $(SRC_BIND_DIR)/$(TF_STACKS_DIR)/$(TF_STACK)
+TF_DATA_DIR         := $(SRC_BIND_DIR)/$(TF_STACKS_DIR)/$(TF_STACK)/.terraform
 TF_PLAN_FILE		:= plan-$(ENVIRONMENT)-$(TF_STACK).tfstate
-TF_VARS_DIR			:= ./variables
-TF_VARS_FILES		:= -var-file=$(TF_VARS_DIR)/project.tfvars -var-file=$(TF_VARS_DIR)/$(ENVIRONMENT).tfvars
+TF_VARS_DIR			:= variables
+TF_VARS_FILES		:= -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/project.tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/$(ENVIRONMENT).tfvars
 
 # Terraform Docker container
 
@@ -27,7 +28,7 @@ TF_CMD = docker run \
 		--env AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY) \
 		--env AWS_SESSION_TOKEN=$(AWS_SESSION_TOKEN) \
 		--env AWS_PROFILE=$(AWS_PROFILE) \
-		--env TF_DATA_DIR=$(SRC_BIND_DIR)/.terraform \
+		--env TF_DATA_DIR=$(TF_DATA_DIR) \
 		$(MOUNT_AWS_CREDS_FILE) \
 		$(TF_CMD_DOCKER_IMAGE)
 
@@ -47,14 +48,17 @@ tf\:destroy:
 	$(TF_CMD) -chdir=$(TF_STACK_DIR) destroy -auto-approve \
 	$(TF_PLAN_FILE)
 
+.PHONY tf:fmt
+tf\:fmt:
+	$(TF_CMD) fmt $(TF_STACK_DIR)
+
 .PHONY tf:info
 tf\:info:
 	$(TF_CMD) -version
 
 .PHONY tf:init
 tf\:init:
-	$(TF_CMD) -chdir=$(TF_STACK_DIR) init \
-	-backend-config=$(TF_BACKEND_FILE)
+	$(TF_CMD) -chdir=$(TF_STACK_DIR) init -backend-config=$(TF_BACKEND_FILE)
 
 .PHONY tf:plan
 tf\:plan:
@@ -75,3 +79,7 @@ tf\:shell:
 		--env TF_DATA_DIR=$(SRC_BIND_DIR)/.terraform \
 		$(MOUNT_AWS_CREDS_FILE) \
 		$(TF_CMD_DOCKER_IMAGE)
+
+.PHONY tf:validate
+tf\:validate:
+	$(TF_CMD) -chdir=$(TF_STACK_DIR) validate
