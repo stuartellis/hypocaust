@@ -10,10 +10,11 @@ before_script:
   - apk add bash make
 
 stages:
-  - plan
+  - apply
 
-plan:
-  stage: plan
+apply:
+  stage: apply
   script:
     make tf:init
     make tf:plan
+    make tf:apply
