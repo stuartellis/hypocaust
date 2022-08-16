@@ -2,9 +2,10 @@
 #
 # https://EditorConfig.org
 
-# Top-most EditorConfig file
+# Specifies that this is the top-level EditorConfig
 root = true
 
+# Defaults for any type of file
 [*]
 end_of_line = lf
 insert_final_newline = true

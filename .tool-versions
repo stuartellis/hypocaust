@@ -1,2 +1,6 @@
+# Tool versions for this project
+# Format is compatible with the asdf tool manager
+# https://asdf-vm.com/
+
 python 3.10.4
 terraform 1.2.7
