@@ -1,0 +1,6 @@
+bucket            = "sje-333594256635-terraform"
+dynamodb_table    = "terraform-state-lock_333594256635_dev"
+encrypt           = "true"
+key               = "hypocaust/app_storage.tfstate"
+region            = "eu-west-2"
+role_arn          = "arn:aws:iam:333594256635:role/stuartellis-org-ci-full-access"
