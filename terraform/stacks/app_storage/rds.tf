@@ -13,26 +13,12 @@ module "app_rds_cluster" {
     }
   }
 
-  endpoints = {
-    static = {
-      identifier     = "static-custom-endpt"
-      type           = "ANY"
-      static_members = ["static-member-1"]
-      tags           = { Endpoint = "static-members" }
-    }
-    excluded = {
-      identifier       = "excluded-custom-endpt"
-      type             = "READER"
-      excluded_members = ["excluded-member-1"]
-      tags             = { Endpoint = "excluded-members" }
-    }
-  }
-
   vpc_id                 = module.vpc.vpc_id
   db_subnet_group_name   = module.vpc.database_subnet_group_name
   create_db_subnet_group = false
   create_security_group  = true
   allowed_cidr_blocks    = module.vpc.private_subnets_cidr_blocks
+  
   security_group_egress_rules = {
     to_cidrs = {
       cidr_blocks = ["10.33.0.0/28"]
