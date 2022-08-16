@@ -15,6 +15,7 @@ MAKEFLAGS += --no-builtin-rules
 
 ENVIRONMENT		?= dev
 TF_STACK		?= hello_lambda
+DEBIAN_RELEASE	?= $(shell grep 'debian' ./.os-versions | cut -d' ' -f2)
 
 # Docker variables
 

@@ -9,7 +9,7 @@ PY_SRC_HOST_DIR		:= $(shell pwd)/python
 
 # Python Docker container
 
-PY_DKR_IMAGE		:= python:$(PY_VERSION)-slim-bullseye
+PY_DKR_IMAGE		:= python:$(PY_VERSION)-slim-$(DEBIAN_RELEASE)
 PY_DKR_CMD = docker run \
 		--rm \
 		--user $(shell id -u) \
