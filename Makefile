@@ -42,4 +42,6 @@ test:
 
 ## Other Targets
 
+include make/docker.makefile
+include make/python.makefile
 include make/terraform.makefile
