@@ -1,5 +1,9 @@
-# Ignore logs directory
+.git
 logs/
 
-# Ignore .git
-.git
+*.dockerfile
+
+.dockerignore
+Dockerfile
+docker-compose.yml
+README.md
