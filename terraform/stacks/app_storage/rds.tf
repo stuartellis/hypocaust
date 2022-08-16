@@ -5,9 +5,10 @@ module "app_rds_cluster" {
   name           = local.name
   engine         = "aurora-postgresql"
   engine_version = "12.9"
+
   instances = {
     1 = {
-      instance_class      = "db.t4g.small"
+      instance_class      = "db.t4g.medium"
       publicly_accessible = true
     }
   }
