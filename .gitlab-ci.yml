@@ -9,6 +9,9 @@ services:
 before_script:
   - apk add bash make
 
+stages:
+  - plan
+
 plan:
   stage: plan
   script:
