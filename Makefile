@@ -16,6 +16,16 @@ MAKEFLAGS += --no-builtin-rules
 ENVIRONMENT		?= dev
 TF_STACK		?= hello_lambda
 
+# Docker variables
+
+SRC_BIND_DIR			:= /src
+FILE_AWS_CREDS_DOCKER 	:= /tmp/aws-credentials
+FILE_AWS_CREDS_HOST		:= $(HOME)/.aws/credentials
+
+ifneq (,$(wildcard $(FILE_AWS_CREDS_HOST)))
+	MOUNT_AWS_CREDS_FILE := -v $(FILE_AWS_CREDS_HOST):$(FILE_AWS_CREDS_DOCKER)
+endif
+
 # Default target
 
 .DEFAULT_GOAL := test
