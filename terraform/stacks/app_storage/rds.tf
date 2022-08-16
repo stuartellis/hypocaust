@@ -4,7 +4,7 @@ module "app_rds_cluster" {
 
   name           = local.name
   engine         = "aurora-postgresql"
-  engine_version = "11.12"
+  engine_version = "12.9"
   instances = {
     1 = {
       instance_class      = "db.t4g.small"
@@ -63,6 +63,6 @@ resource "aws_db_parameter_group" "example" {
 resource "aws_rds_cluster_parameter_group" "example" {
   name        = "${local.name}-aurora-postgres12-cluster-parameter-group"
   family      = "aurora-postgresql12"
-  description = "${local.name}-aurora-postgres11-cluster-parameter-group"
+  description = "${local.name}-aurora-postgres12-cluster-parameter-group"
   tags        = local.tags
 }
