@@ -6,6 +6,7 @@
 
 DOCKER_SRC_HOST_DIR		:= $(shell pwd)/docker
 DOCKER_AUTHORS			:= "stuart@stuartellis.name"
+DOCKER_IMAGE			:= pgrunner
 
 # Docker Commands
 
@@ -15,7 +16,7 @@ DKR_CMD = docker
 
 .PHONY dkr:build
 dkr\:build:
-	@$(DKR_CMD) build ./python/makedb -f ./docker/pgtoolbox.dockerfile -t pgtoolbox:$(PROJECT_VERSION) \
+	@$(DKR_CMD) build ./python/makedb -f ./docker/$(DOCKER_IMAGE).dockerfile -t $(DOCKER_IMAGE):$(PROJECT_VERSION) \
 	--label org.opencontainers.image.version=$(PROJECT_VERSION) \
 	--label org.opencontainers.image.authors=$(DOCKER_AUTHORS)
 

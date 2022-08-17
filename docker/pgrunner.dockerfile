@@ -1,40 +1,20 @@
 ARG DOCKER_IMAGE_BASE=python:3.9-slim-bullseye
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-#===== BASE =====
+#============ BASE ===========
 
 FROM ${DOCKER_IMAGE_BASE} as base_python
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get autoremove && \
-    apt-get clean
-
-#===== BUILDER =====
+#========== BUILDER ==========
 
 FROM base_python as builder
 
-ARG DEBIAN_FRONTEND=noninteractive
-
 ENV PYTHONUNBUFFERED=1
-
-RUN apt-get -y --no-install-recommends install \ 
-    build-essential \
-    python-dev && \
-    apt-get clean
-
 ENV PATH="/opt/venv/bin:$PATH"
 RUN python -m venv /opt/venv
-RUN pip install --upgrade --no-cache-dir \
-    setuptools \
-    wheel \
-    pip-tools
-
 COPY ./requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade --no-cache-dir -r requirements.txt
 
-#===== APP =====
+#=========== APP ============
 
 FROM base_python as app
 
@@ -43,14 +23,11 @@ RUN groupadd --gid 1000 appusers \
 
 RUN mkdir /app && chown -R appuser:appusers /app
 
-RUN apt-get -y --no-install-recommends install \
-    postgresql-client && \
-    apt-get clean
-
 COPY --from=builder --chown=appuser:appusers /opt/venv /opt/venv
 COPY --chown=appuser:appusers . /app
 
 WORKDIR /app
+
 USER appuser
 ENV PATH="/opt/venv/bin:/home/appuser/.local/bin:$PATH"
 ENV PYTHONUNBUFFERED 1
