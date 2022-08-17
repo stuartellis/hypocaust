@@ -10,11 +10,18 @@ before_script:
   - apk add bash make
 
 stages:
-  - apply
+  - infra
+  - db
 
-apply:
-  stage: apply
+tf-apply:
+  stage: infra
   script:
     make tf:init
     make tf:plan
     make tf:apply
+
+mkdb:
+  stage: db
+  script:
+    make dkr:build 
+    docker run pgtoolbox:$(cat ./.project-version)
