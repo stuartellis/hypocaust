@@ -16,6 +16,7 @@ MAKEFLAGS += --no-builtin-rules
 ENVIRONMENT		?= dev
 TF_STACK		?= app_storage
 DEBIAN_RELEASE	?= $(shell grep 'debian' ./.os-versions | cut -d' ' -f2)
+PROJECT_VERSION ?= $(shell cat ./.project-version)
 
 # Docker variables
 

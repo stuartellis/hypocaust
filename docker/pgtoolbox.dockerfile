@@ -3,7 +3,6 @@ ARG DOCKER_IMAGE_BASE=python:3.9-slim-bullseye
 #===== BASE =====
 
 FROM ${DOCKER_IMAGE_BASE} as base_python
-LABEL org.opencontainers.image.authors="Stuart Ellis <stuart@stuartellis.name>"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -13,12 +12,6 @@ RUN apt-get update && \
 #===== BUILDER =====
 
 FROM base_python as builder
-LABEL org.opencontainers.image.authors="Stuart Ellis <stuart@stuartellis.name>"
-
-LABEL org.opencontainers.image.version=0.1.0
-LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.title="Toolbox Container" \ 
-  org.opencontainers.image.description="Linux shell and tools"
 
 ENV PYTHONUNBUFFERED=1
 
@@ -41,13 +34,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 #===== APP =====
 
 FROM base_python as app
-LABEL org.opencontainers.image.authors="Stuart Ellis <stuart@stuartellis.name>"
-
-LABEL org.opencontainers.image.version=0.1.0
-
-LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.title="Toolbox Container" \ 
-  org.opencontainers.image.description="Linux shell and tools"
 
 RUN groupadd --gid 1000 appusers \
   && useradd --uid 1000 --gid appusers --shell /bin/bash --create-home appuser
@@ -59,7 +45,7 @@ RUN apt-get -y --no-install-recommends install \
     apt-get clean
 
 COPY --from=builder --chown=appuser:appusers /opt/venv /opt/venv
-COPY --chown=appuser:appusers ./makedb /app
+COPY --chown=appuser:appusers . /app
 
 WORKDIR /app
 USER appuser
