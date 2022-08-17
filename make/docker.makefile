@@ -12,6 +12,10 @@ DKR_CMD = docker
 
 # Docker Targets
 
+.PHONY dkr:build
+dkr\:build:
+	@cd docker && $(DKR_CMD) build . -f ./pgtoolbox.dockerfile -t pgtoolbox:0.2.0
+
 .PHONY dkr:info
 dkr\:info:
 	@$(DKR_CMD) --version
