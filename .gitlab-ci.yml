@@ -16,12 +16,12 @@ stages:
 tf-apply:
   stage: infra
   script:
-    make tf:init
-    make tf:plan
-    make tf:apply
+    - make tf:init
+    - make tf:plan
+    - make tf:apply
 
 mkdb:
   stage: db
   script:
-    make dkr:build 
-    docker run pgrunner:$(cat ./.project-version)
+    - make dkr:build
+    - docker run pgrunner:$(cat ./.project-version)
