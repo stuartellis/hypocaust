@@ -16,9 +16,8 @@ DKR_CMD = docker
 
 .PHONY dkr:build
 dkr\:build:
-	@$(DKR_CMD) build ./python/makedb -f ./docker/$(DOCKER_IMAGE).dockerfile -t $(DOCKER_IMAGE):$(PROJECT_VERSION)-$(GIT_BRANCH) \
+	@$(DKR_CMD) build ./python/makedb -f ./docker/$(DOCKER_IMAGE).dockerfile -t $(DOCKER_IMAGE):$(PROJECT_VERSION) \
 	--build-arg DOCKER_IMAGE_BASE=$(PY_DOCKER_IMAGE_BASE) \
-	--label org.opencontainers.image.revision=$(GIT_COMMIT) \
 	--label org.opencontainers.image.version=$(PROJECT_VERSION) \
 	--label org.opencontainers.image.authors=$(DOCKER_AUTHORS)
 

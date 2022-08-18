@@ -17,8 +17,6 @@ ENVIRONMENT		?= dev
 TF_STACK		?= app_storage
 DEBIAN_RELEASE	?= $(shell grep 'debian' ./.os-versions | cut -d' ' -f2)
 PROJECT_VERSION ?= $(shell cat ./.project-version)
-GIT_COMMIT		:= $(shell git rev-parse --short HEAD)
-GIT_BRANCH		:= $(shell git rev-parse --abbrev-ref HEAD)
 
 # Docker variables
 
