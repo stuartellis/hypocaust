@@ -4,8 +4,9 @@
 
 # Project variables for Python
 
-PY_VERSION			:= $(shell grep 'python' ./.tool-versions | cut -d' ' -f2)
-PY_SRC_HOST_DIR		:= $(shell pwd)/python
+PY_VERSION				:= $(shell grep 'python' ./.tool-versions | cut -d' ' -f2)
+PY_DOCKER_IMAGE_BASE 	:= python:$(PY_VERSION)-slim-$(DEBIAN_RELEASE)
+PY_SRC_HOST_DIR			:= $(shell pwd)/python
 
 # Python Docker container
 
