@@ -24,3 +24,7 @@ dkr\:build:
 .PHONY dkr:info
 dkr\:info:
 	@$(DKR_CMD) --version
+
+.PHONY dkr:run
+dkr\:run:
+	@$(DKR_CMD) run --rm $(DOCKER_IMAGE):$(PROJECT_VERSION)
