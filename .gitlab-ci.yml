@@ -24,4 +24,4 @@ mkdb:
   stage: db
   script:
     - make dkr:build
-    - docker run pgrunner:$(cat ./.project-version)
+    - docker run --rm pgrunner:$(cat ./.project-version)

@@ -12,7 +12,7 @@ ENV PYTHONUNBUFFERED=1
 ENV PATH="/opt/venv/bin:$PATH"
 RUN python -m venv /opt/venv
 COPY ./requirements.txt ./
-RUN pip install --upgrade --no-cache-dir -r requirements.txt
+RUN . /opt/venv/bin/activate && pip install --upgrade --no-cache-dir -r requirements.txt
 
 #=========== APP ============
 
@@ -32,5 +32,4 @@ USER appuser
 ENV PATH="/opt/venv/bin:/home/appuser/.local/bin:$PATH"
 ENV PYTHONUNBUFFERED 1
 
-ENTRYPOINT ["python"] 
-CMD ["./makedb.py"]
+CMD . /opt/venv/bin/activate && exec python ./makedb.py
