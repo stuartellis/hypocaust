@@ -45,6 +45,11 @@ resource "aws_iam_role" "dbmaker_lambda" {
   })
 }
 
+resource "aws_iam_role_policy_attachment" "dbmaker_lambda_vpc_access_execution" {
+  role       = aws_iam_role.dbmaker_lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
+
 resource "aws_lambda_function" "dbmaker_lambda" {
   filename         = data.archive_file.dbmaker_lambda_zip.output_path
   function_name    = var.dbmaker_lambda_name
@@ -52,6 +57,11 @@ resource "aws_lambda_function" "dbmaker_lambda" {
   source_code_hash = data.archive_file.dbmaker_lambda_zip.output_base64sha256
   runtime          = var.lambda_runtime
   role             = aws_iam_role.dbmaker_lambda.arn
+
+  vpc_config {
+    subnet_ids         = var.dbmaker_lambda_subnet_ids
+    security_group_ids = var.dbmaker_lambda_security_group_ids
+  }
 
   environment {
     variables = {

@@ -10,6 +10,14 @@ variable "dbmaker_lambda_output_zip" {
   type = string
 }
 
+variable "dbmaker_lambda_security_group_ids" {
+  type = list(string)
+}
+
+variable "dbmaker_lambda_subnet_ids" {
+  type = list(string)
+}
+
 variable "prefix" {
   default = "sje"
   type    = string
