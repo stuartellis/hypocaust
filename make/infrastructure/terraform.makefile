@@ -45,8 +45,9 @@ tf\:check:
 
 .PHONY tf:destroy
 tf\:destroy:
-	$(TF_CMD) -chdir=$(TF_STACK_DIR) destroy -auto-approve \
-	$(TF_PLAN_FILE)
+	$(TF_CMD) -chdir=$(TF_STACK_DIR) plan -destroy $(TF_VARS_FILES) \
+	-out=destroy-$(TF_PLAN_FILE) && \
+    $(TF_CMD) -chdir=$(TF_STACK_DIR) apply destroy-$(TF_PLAN_FILE)
 
 .PHONY tf:fmt
 tf\:fmt:
@@ -62,7 +63,7 @@ tf\:init:
 
 .PHONY tf:plan
 tf\:plan:
-	$(TF_CMD) -chdir=$(TF_STACK_DIR) plan \
+	$(TF_CMD) -chdir=$(TF_STACK_DIR) plan $(TF_VARS_FILES) \
 	-out=$(TF_PLAN_FILE)
 
 .PHONY tf:shell
