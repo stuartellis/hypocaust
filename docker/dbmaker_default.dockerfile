@@ -32,4 +32,4 @@ USER appuser
 ENV PATH="/opt/venv/bin:/home/appuser/.local/bin:$PATH"
 ENV PYTHONUNBUFFERED 1
 
-CMD . /opt/venv/bin/activate && exec python ./makedb.py
+CMD . /opt/venv/bin/activate && exec python ./db_maker.py

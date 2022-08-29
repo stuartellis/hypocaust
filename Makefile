@@ -13,13 +13,18 @@ MAKEFLAGS += --no-builtin-rules
 
 # Project variables
 
-ENVIRONMENT		?= dev
-TF_STACK		?= app_storage
-DEBIAN_RELEASE	?= $(shell grep 'debian' ./.os-versions | cut -d' ' -f2)
-PROJECT_VERSION ?= $(shell cat ./.project-version)
+PROJECT_MAINTAINERS	?= "stuart@stuartellis.name"
+ENVIRONMENT			?= dev
+TF_STACK			?= app_storage
+DEBIAN_RELEASE		?= $(shell grep 'debian' ./.os-versions | cut -d' ' -f2)
+TARGET_CPU_ARCH		?= $(shell uname -m)
 
 # Docker variables
 
+# Docker Commands
+
+DOCKER_COMMAND		:= docker
+DOCKER_COMPOSE_CMD	:= docker-compose -f $(shell pwd)/docker/compose.yml
 SRC_BIND_DIR			:= /src
 FILE_AWS_CREDS_DOCKER 	:= /tmp/aws-credentials
 FILE_AWS_CREDS_HOST		:= $(HOME)/.aws/credentials
@@ -44,6 +49,5 @@ test:
 
 ## Other Targets
 
-include make/docker.makefile
-include make/python.makefile
+include make/apps/dbmaker.makefile
 include make/terraform.makefile
