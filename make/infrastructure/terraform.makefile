@@ -6,14 +6,14 @@
 
 TF_VERSION			:= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
 
-TF_SRC_HOST_DIR		:= $(shell pwd)/terraform
-TF_BACKENDS_DIR		:= backends
+TF_SRC_HOST_DIR		:= $(shell pwd)
+TF_BACKENDS_DIR		:= terraform/backends
 TF_BACKEND_FILE		:= $(SRC_BIND_DIR)/$(TF_BACKENDS_DIR)/$(ENVIRONMENT)/$(TF_STACK).backend
-TF_STACKS_DIR		:= stacks
+TF_STACKS_DIR		:= terraform/stacks
 TF_STACK_DIR		:= $(SRC_BIND_DIR)/$(TF_STACKS_DIR)/$(TF_STACK)
 TF_DATA_DIR         := $(SRC_BIND_DIR)/$(TF_STACKS_DIR)/$(TF_STACK)/.terraform
 TF_PLAN_FILE		:= plan-$(ENVIRONMENT)-$(TF_STACK).tfstate
-TF_VARS_DIR			:= variables
+TF_VARS_DIR			:= terraform/variables
 TF_VARS_FILES		:= -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/project/project.tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/environments/$(ENVIRONMENT).tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/stacks/$(TF_STACK).tfvars
 
 # Terraform Docker container

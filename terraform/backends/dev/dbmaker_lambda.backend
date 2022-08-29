@@ -1,0 +1,5 @@
+bucket            = "sje-333594256635-terraform"
+dynamodb_table    = "terraform-state-lock_333594256635_dev"
+encrypt           = "true"
+key               = "hypocaust/dbmaker_lambda.tfstate"
+region            = "eu-west-2"
