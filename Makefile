@@ -16,7 +16,6 @@ MAKEFLAGS += --no-builtin-rules
 PROJECT_MAINTAINERS	?= "stuart@stuartellis.name"
 ENVIRONMENT			?= dev
 TF_STACK			?= app_storage
-DEBIAN_RELEASE		?= $(shell grep 'debian' ./.os-versions | cut -d' ' -f2)
 TARGET_CPU_ARCH		?= $(shell uname -m)
 
 # Docker variables
