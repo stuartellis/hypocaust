@@ -14,7 +14,7 @@ TF_STACK_DIR		:= $(SRC_BIND_DIR)/$(TF_STACKS_DIR)/$(TF_STACK)
 TF_DATA_DIR         := $(SRC_BIND_DIR)/$(TF_STACKS_DIR)/$(TF_STACK)/.terraform
 TF_PLAN_FILE		:= plan-$(ENVIRONMENT)-$(TF_STACK).tfstate
 TF_VARS_DIR			:= variables
-TF_VARS_FILES		:= -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/project.tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/$(ENVIRONMENT).tfvars
+TF_VARS_FILES		:= -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/project/project.tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/environments/$(ENVIRONMENT).tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/stacks/$(TF_STACK).tfvars
 
 # Terraform Docker container
 

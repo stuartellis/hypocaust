@@ -50,4 +50,4 @@ test:
 ## Other Targets
 
 include make/apps/dbmaker.makefile
-include make/terraform.makefile
+include make/infrastructure/terraform.makefile
