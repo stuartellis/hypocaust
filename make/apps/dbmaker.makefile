@@ -17,8 +17,9 @@ dbmaker\:build:
 
 .PHONY dbmaker:info
 dbmaker\:info:
-	@echo App name: $(APP_NAME)
-	@echo App version: $(APP_VERSION)
+	@echo Name: $(APP_NAME)
+	@echo Version: $(APP_VERSION)
+	@echo Maintainers: $(PROJECT_MAINTAINERS)
 
 .PHONY dbmaker:shell
 dbmaker\:shell:
