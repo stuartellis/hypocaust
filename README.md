@@ -4,21 +4,12 @@ Example project.
 
 ## Running this project
 
-To run this project, use *make* to run a task:
+To run this project, use *make* to run a task.
 
-    make tf:info ENVIRONMENT=dev TF_STACK=hello_lambda
-
-The Make files provide tasks in these namespaces:
-
-* *dkr:* - Docker
-* *py:* - Python
-* *tf:* - Terraform
-
-For example:
-
-* *dkr:info* - Docker
-* *py:info* - Python
-* *tf:info* - Terraform
+    make dbmaker:setup
+    make tf:init ENVIRONMENT=dev TF_STACK=dbmaker_lambda
+    make tf:plan ENVIRONMENT=dev TF_STACK=dbmaker_lambda
+    make tf:apply ENVIRONMENT=dev TF_STACK=dbmaker_lambda
 
 ## Developing this project
 

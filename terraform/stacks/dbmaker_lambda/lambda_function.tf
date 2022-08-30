@@ -65,7 +65,10 @@ resource "aws_lambda_function" "dbmaker_lambda" {
 
   environment {
     variables = {
-      TARGET_BUCKET_NAME = "${var.prefix}-image-target"
+      SECRETS_RDS_CREDENTIALS_NAME = "/${var.prefix}/${var.project_identifier}/${var.aws_env_name}/app_config/credentials"
+      RDS_DATABASE_NAME            = data.aws_ssm_parameter.app_storage_rds_dbname.value
+      RDS_PORT                     = data.aws_ssm_parameter.app_storage_rds_port.value
+      RDS_WRITE_ENDPOINT           = data.aws_ssm_parameter.app_storage_rds_write_endpoint.value
     }
   }
 }

@@ -18,7 +18,7 @@ module "app_rds_cluster" {
   create_db_subnet_group = false
   create_security_group  = true
   allowed_cidr_blocks    = module.vpc.private_subnets_cidr_blocks
-  
+
   iam_database_authentication_enabled = false
   master_password                     = "Helper-Heritage-Rewire"
   create_random_password              = false

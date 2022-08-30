@@ -27,6 +27,10 @@ variable "project_identifier" {
   type = string
 }
 
+variable "tf_db_stack_name" {
+  type = string
+}
+
 variable "tf_stack_name" {
   type = string
 }

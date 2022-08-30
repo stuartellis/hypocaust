@@ -2,6 +2,7 @@ APP_NAME					:= dbmaker
 
 APP_DOCKER_IMAGE_BASE 		:= python:3.9-slim-bullseye
 APP_SOURCE_HOST_DIR			:= $(shell pwd)/python/dbmaker
+APP_BUILD_DIR				:= $(shell pwd)/tmp/build/dbmaker
 APP_VERSION					:= $(shell grep 'version' $(APP_SOURCE_HOST_DIR)/pyproject.toml | cut -d'=' -f2 | tr -d '"\ ') 
 DOCKER_FILE					:= $(shell pwd)/python/dbmaker_default.dockerfile
 DOCKER_IMAGE_TAG			:= $(APP_NAME):$(APP_VERSION)
@@ -20,6 +21,12 @@ dbmaker\:info:
 	@echo Name: $(APP_NAME)
 	@echo Version: $(APP_VERSION)
 	@echo Maintainers: $(PROJECT_MAINTAINERS)
+
+.PHONY dbmaker:compile
+dbmaker\:setup:
+	@mkdir -p $(APP_BUILD_DIR)
+	@cp -r $(APP_SOURCE_HOST_DIR)/dbmaker/* $(APP_BUILD_DIR)
+	@pip3 install -r $(APP_SOURCE_HOST_DIR)/requirements.txt --python 3.9 --implementation cp --platform manylinux2014_x86_64 --only-binary=:all: --target $(APP_BUILD_DIR)
 
 .PHONY dbmaker:shell
 dbmaker\:shell:
