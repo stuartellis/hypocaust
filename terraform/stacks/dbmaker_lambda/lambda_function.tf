@@ -26,6 +26,16 @@ resource "aws_iam_role" "dbmaker_lambda" {
           ]
           Effect   = "Allow"
           Resource = "${aws_cloudwatch_log_group.dbmaker_lambda.arn}:*"
+        },
+        {
+          "Effect" : "Allow",
+          "Action" : "secretsmanager:GetSecretValue",
+          "Resource" : "*"
+        },
+        {
+          "Effect" : "Allow",
+          "Action" : "ssm:GetParameter",
+          "Resource" : "*"
         }
       ]
     })

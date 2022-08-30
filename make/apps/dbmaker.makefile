@@ -23,7 +23,7 @@ dbmaker\:info:
 	@echo Maintainers: $(PROJECT_MAINTAINERS)
 
 .PHONY dbmaker:compile
-dbmaker\:setup:
+dbmaker\:compile:
 	@mkdir -p $(APP_BUILD_DIR)
 	@cp -r $(APP_SOURCE_HOST_DIR)/dbmaker/* $(APP_BUILD_DIR)
 	@pip3 install -r $(APP_SOURCE_HOST_DIR)/requirements.txt --python 3.9 --implementation cp --platform manylinux2014_x86_64 --only-binary=:all: --target $(APP_BUILD_DIR)
