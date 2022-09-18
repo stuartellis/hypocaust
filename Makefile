@@ -22,8 +22,10 @@ TARGET_CPU_ARCH		?= $(shell uname -m)
 
 # Docker Commands
 
-DOCKER_COMMAND		:= docker
-DOCKER_COMPOSE_CMD	:= docker-compose -f $(shell pwd)/docker/compose.yml
+DOCKER_BUILD_CMD 		:= docker build
+DOCKER_SHELL_CMD		:= docker run -it --entrypoint sh
+DOCKER_RUN_CMD 			:= docker run
+DOCKER_COMPOSE_CMD		:= docker-compose -f $(shell pwd)/docker/compose.yml
 SRC_BIND_DIR			:= /src
 FILE_AWS_CREDS_DOCKER 	:= /tmp/aws-credentials
 FILE_AWS_CREDS_HOST		:= $(HOME)/.aws/credentials

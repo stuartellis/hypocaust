@@ -7,11 +7,23 @@ APP_VERSION					:= $(shell grep 'version' $(APP_SOURCE_HOST_DIR)/pyproject.toml 
 DOCKER_FILE					:= $(shell pwd)/python/dbmaker_default.dockerfile
 DOCKER_IMAGE_TAG			:= $(APP_NAME):$(APP_VERSION)
 
+APP_RUN_CMD := --rm \
+		--user $(shell id -u) \
+		--mount type=bind,source=$(TF_SRC_HOST_DIR),destination=$(SRC_BIND_DIR) \
+		-w $(SRC_BIND_DIR) \
+		--env AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) \
+		--env AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY) \
+		--env AWS_SESSION_TOKEN=$(AWS_SESSION_TOKEN) \
+		--env AWS_PROFILE=$(AWS_PROFILE) \
+		--env TF_DATA_DIR=$(TF_DATA_DIR) \
+		$(MOUNT_AWS_CREDS_FILE) \
+		$(APP_DOCKER_IMAGE_BASE)
+
 # App Targets
 
 .PHONY dbmaker:build
 dbmaker\:build:
-	@$(DOCKER_COMMAND) build $(APP_SOURCE_HOST_DIR) --platform $(TARGET_CPU_ARCH) -f $(DOCKER_FILE) -t $(DOCKER_IMAGE_TAG) \
+	@$(DOCKER_BUILD_CMD) $(APP_SOURCE_HOST_DIR) --platform $(TARGET_CPU_ARCH) -f $(DOCKER_FILE) -t $(DOCKER_IMAGE_TAG) \
 	--build-arg DOCKER_IMAGE_BASE=$(APP_DOCKER_IMAGE_BASE) \
 	--label org.opencontainers.image.version=$(APP_VERSION) \
 	--label org.opencontainers.image.authors=$(PROJECT_MAINTAINERS)
@@ -30,7 +42,7 @@ dbmaker\:compile:
 
 .PHONY dbmaker:shell
 dbmaker\:shell:
-	docker run -it --entrypoint /bin/bash \
+	$(DOCKER_SHELL_CMD) $(APP_RUN_CMD) \
 		--rm \
 		--user $(shell id -u) \
 		--mount type=bind,source=$(APP_SOURCE_HOST_DIR),destination=$(SRC_BIND_DIR) \
