@@ -8,9 +8,9 @@ variable "prefix" {
 }
 
 variable "project_identifier" {
-  type    = string
+  type = string
 }
 
 variable "tf_stack_name" {
-  type    = string
+  type = string
 }
