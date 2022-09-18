@@ -34,40 +34,40 @@ TF_CMD = docker run \
 
 # Terraform Targets
 
-.PHONY tf:apply
-tf\:apply:
+.PHONY terraform:apply
+terraform\:apply:
 	$(TF_CMD) -chdir=$(TF_STACK_DIR) apply \
 	$(TF_PLAN_FILE)
 
-.PHONY tf:check
-tf\:check:
+.PHONY terraform:check
+terraform\:check:
 	$(TF_CMD) fmt -diff -check $(TF_STACK_DIR)
 
-.PHONY tf:destroy
-tf\:destroy:
+.PHONY terraform:destroy
+terraform\:destroy:
 	$(TF_CMD) -chdir=$(TF_STACK_DIR) plan -destroy $(TF_VARS_FILES) \
 	-out=destroy-$(TF_PLAN_FILE) && \
     $(TF_CMD) -chdir=$(TF_STACK_DIR) apply destroy-$(TF_PLAN_FILE)
 
-.PHONY tf:fmt
-tf\:fmt:
+.PHONY terraform:fmt
+terraform\:fmt:
 	$(TF_CMD) fmt $(TF_STACK_DIR)
 
-.PHONY tf:info
-tf\:info:
+.PHONY terraform:info
+terraform\:info:
 	$(TF_CMD) -version
 
-.PHONY tf:init
-tf\:init:
+.PHONY terraform:init
+terraform\:init:
 	$(TF_CMD) -chdir=$(TF_STACK_DIR) init -backend-config=$(TF_BACKEND_FILE)
 
-.PHONY tf:plan
-tf\:plan:
+.PHONY terraform:plan
+terraform\:plan:
 	$(TF_CMD) -chdir=$(TF_STACK_DIR) plan $(TF_VARS_FILES) \
 	-out=$(TF_PLAN_FILE)
 
-.PHONY tf:shell
-tf\:shell:
+.PHONY terraform:shell
+terraform\:shell:
 	docker run -it --entrypoint sh \
 		--rm \
 		--user $(shell id -u) \
@@ -81,6 +81,6 @@ tf\:shell:
 		$(MOUNT_AWS_CREDS_FILE) \
 		$(TF_CMD_DOCKER_IMAGE)
 
-.PHONY tf:validate
-tf\:validate:
+.PHONY terraform:validate
+terraform\:validate:
 	$(TF_CMD) -chdir=$(TF_STACK_DIR) validate

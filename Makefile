@@ -15,7 +15,7 @@ MAKEFLAGS += --no-builtin-rules
 
 PROJECT_MAINTAINERS	?= "stuart@stuartellis.name"
 ENVIRONMENT			?= dev
-TF_STACK			?= app_storage
+TF_STACK			?= app_config
 TARGET_CPU_ARCH		?= $(shell uname -m)
 
 # Docker variables
