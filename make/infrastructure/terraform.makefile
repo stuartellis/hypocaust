@@ -2,9 +2,15 @@
 #
 # https://makefiletutorial.com
 
-# Project variables for Terraform
+# Terraform Version
 
 TF_VERSION			:= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
+
+# Terraform Docker Container
+
+TF_CMD_DOCKER_IMAGE		:= hashicorp/terraform:$(TF_VERSION)
+
+# Other Project Variables for Terraform
 
 TF_SRC_HOST_DIR		:= $(shell pwd)
 TF_BACKENDS_DIR		:= terraform/backends
@@ -12,23 +18,16 @@ TF_BACKEND_FILE		:= $(SRC_BIND_DIR)/$(TF_BACKENDS_DIR)/$(ENVIRONMENT)/$(TF_STACK
 TF_STACKS_DIR		:= terraform/stacks
 TF_STACK_DIR		:= $(SRC_BIND_DIR)/$(TF_STACKS_DIR)/$(TF_STACK)
 TF_DATA_DIR         := $(SRC_BIND_DIR)/$(TF_STACKS_DIR)/$(TF_STACK)/.terraform
-TF_PLAN_FILE		:= plan-$(ENVIRONMENT)-$(TF_STACK).tfstate
+TF_PLAN_FILE		:= plan-$(PROJECT_NAME)-$(ENVIRONMENT)-$(TF_STACK).tfstate
 TF_VARS_DIR			:= terraform/variables
 TF_VARS_FILES		:= -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/project/project.tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/environments/$(ENVIRONMENT).tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/stacks/$(TF_STACK).tfvars
 
-# Terraform Docker container
-
-TF_CMD_DOCKER_IMAGE		:= hashicorp/terraform:$(TF_VERSION)
 TF_RUN_CMD := --rm \
 		--user $(shell id -u) \
 		--mount type=bind,source=$(TF_SRC_HOST_DIR),destination=$(SRC_BIND_DIR) \
 		-w $(SRC_BIND_DIR) \
-		--env AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) \
-		--env AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY) \
-		--env AWS_SESSION_TOKEN=$(AWS_SESSION_TOKEN) \
-		--env AWS_PROFILE=$(AWS_PROFILE) \
 		--env TF_DATA_DIR=$(TF_DATA_DIR) \
-		$(MOUNT_AWS_CREDS_FILE) \
+		$(DOCKER_AWS_CREDENTIALS) \
 		$(TF_CMD_DOCKER_IMAGE)
 
 # Terraform Targets
