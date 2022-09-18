@@ -2,5 +2,5 @@
 # Format is compatible with the asdf tool manager
 # https://asdf-vm.com/
 
-python 3.9.13
-terraform 1.2.7
+python 3.9.14
+terraform 1.2.9
