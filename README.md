@@ -1,6 +1,6 @@
 # Hypocaust
 
-Example project.
+Example project for a database-backed Web application on AWS.
 
 ## Running this project
 
