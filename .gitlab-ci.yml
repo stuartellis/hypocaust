@@ -16,9 +16,9 @@ stages:
 tf-apply:
   stage: infra
   script:
-    - make tf:init
-    - make tf:plan
-    - make tf:apply
+    - make terraform:init
+    - make terraform:plan
+    - make terraform:apply
 
 mkdb:
   stage: db
